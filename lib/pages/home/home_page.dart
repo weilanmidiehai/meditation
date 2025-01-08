@@ -1,45 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/auth_controller.dart';
-import '../widgets/icon_font_icons.dart';
+
+import '../../widgets/icon_font_icons.dart';
+import 'home_controller.dart';
+import 'home_drawer.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+  final controller = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
-    final AuthController authController = Get.find(); // 获取控制器实例
-    return Scaffold(
-      appBar: AppBar(
-        leading: const Icon(IconFontIcons.iconMenu),
-        title: const Icon(IconFontIcons.iconLogo,
-            size: 50, color: Color(0xFF75af64)),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: InkWell(
-              onTap: () {},
-              child: Image.network(
-                'https://lanhu-oss.lanhuapp.com/FigmaDDSSlicePNG6f8e7faa1e30eb7e06e3496dee37cbf2.png',
-                width: 36,
-                height: 36,
-              ),
-            ),
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          Container(
-            color: Colors.white,
-            width: double.infinity,
-            child: Column(
-              children: [
-                // Text Group
-                const Padding(
-                  padding: EdgeInsets.only(
-                    top: 35,
+    return GetBuilder<HomeController>(
+        init: controller,
+        global: true,
+        builder: ((controller) {
+          return Scaffold(
+            appBar: AppBar(
+              // leading: const Icon(IconFont.iconMenu),
+              title: const Icon(IconFont.iconLogo,
+                  size: 50, color: Color(0xFF75af64)),
+              // title: Text('home'.tr),
+              actions: [
+                InkWell(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Icon(
+                      controller.multiple.value
+                          ? Icons.dashboard
+                          : Icons.view_agenda,
+                    ),
                   ),
+                  onTap: () {
+                    controller.setMultiple();
+                  },
+                ),
+              ],
+            ),
+            drawer: HomeDrawer(logic: controller),
+            body: Column(
+              children: [
+                InkWell(
+                    onTap: () {
+                      // Get.to(const WebViewExample());
+                    },
+                    child:
+                        HomeController.widgetOptions[controller.selectedIndex]),
+                const Padding(
+                  padding: EdgeInsets.only(top: 35, bottom: 30),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -63,12 +71,17 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                Padding(
-                  padding: const EdgeInsets.all(32),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                Expanded(
+                    child: GridView(
+                        // padding: const EdgeInsets.symmetric(horizontal: 5),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: controller.multiple.value ? 4 : 3,
+                            //横轴三个子widget
+                            childAspectRatio: 1, //宽高比为1时，子widget
+                            mainAxisSpacing: 0, //主轴空隙间距
+                            crossAxisSpacing: 0 //次轴空隙间距
+                            ),
+                        children: [
                       iconText(
                           icon:
                               'https://lanhu-oss.lanhuapp.com/FigmaDDSSlicePNG72f099b2988760cd7296dac0021fdba6.png',
@@ -85,15 +98,11 @@ class HomePage extends StatelessWidget {
                           icon:
                               'https://lanhu-oss.lanhuapp.com/FigmaDDSSlicePNG7cf5bc548c927e55523d84cf1ef1cfc8.png',
                           title: '焦虑')
-                    ],
-                  ),
-                ),
+                    ])),
               ],
             ),
-          ),
-        ],
-      ),
-    );
+          );
+        }));
   }
 
   Widget iconText({
@@ -103,8 +112,8 @@ class HomePage extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 62,
-          height: 65,
+          width: 60,
+          height: 60,
           decoration: BoxDecoration(
               color: const Color(0xADADC46E),
               borderRadius: BorderRadius.circular(20)),

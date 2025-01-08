@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/auth_controller.dart';
-import 'home_page.dart'; // 确保路径正确
+import 'controllers/auth_controller.dart';
+import 'navigation_page.dart';
+import 'widgets/icon_font_icons.dart';
 
 // class LoginPage extends StatelessWidget {
 //   @override
@@ -36,40 +37,60 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthController authController = Get.find();
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.all(30),
-        child: ListView(
-          children: [
-            // 中间的大图片
-            // Image.network(
-            //   "https://lanhu-oss.lanhuapp.com/FigmaDDSSlicePNG583159727586412757ad39065a3dc8f8.png",
-            //   width: 422,
-            //   height: 327,
-            //   // margin: EdgeInsets.only(bottom: 104),
-            // ),
-            // 登录区域
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+              onPressed: () {
+                // 切换语言
+                if (Get.locale == const Locale('en', 'US')) {
+                  Get.updateLocale(const Locale('zh', 'CN'));
+                } else {
+                  Get.updateLocale(const Locale('en', 'US'));
+                }
+              },
+              icon: Icon(
+                  Get.locale == const Locale('en', 'US')
+                      ? IconFont.iconEN
+                      : IconFont.iconZH,
+                  size: 30,
+                  color: Theme.of(context).colorScheme.primary))
+        ],
+      ),
+      body: Stack(
+        children: [
+          // 背景图
+          Positioned(
+              bottom: 0,
+              right: 0,
+              child: Image.asset('assets/images/login_bg.png',
+                  fit: BoxFit.cover, width: MediaQuery.sizeOf(context).width)),
+          Container(
+            padding: const EdgeInsets.all(30),
+            child: ListView(
               children: [
-                CircleAvatar(
-                  radius: 25,
-                  backgroundImage: NetworkImage(
-                      "https://lanhu-oss.lanhuapp.com/FigmaDDSSlicePNGfeaa1b4829c80ec198e113ae8ac32305.png"),
+                // LOGO
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Icon(IconFont.iconLogo,
+                      size: 60,
+                      color: Theme.of(context).colorScheme.primaryContainer),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 30),
+                Padding(
+                  padding: const EdgeInsets.only(top: 30),
                   child: Text(
-                    '立即登录',
-                    style: TextStyle(fontSize: 24),
+                    "loginNow".tr,
+                    style: const TextStyle(fontSize: 24),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 19),
                   child: Text(
-                    '立即登录，以访问您的历史练习和保存收藏的音乐。',
+                    'loginTitle1'.tr,
+                    // '立即登录，以访问您的历史练习和保存收藏的音乐。',
                     style: TextStyle(
                       fontSize: 18,
-                      color: Colors.black.withOpacity(0.7),
+                      color: Theme.of(context).colorScheme.outline,
                       fontFamily: 'STSong-Regular',
                     ),
                   ),
@@ -84,9 +105,6 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  // width: 305,
-                  // height: 60,
-                  // margin: const EdgeInsets.only(left: 35, top: 14),
                   decoration: const BoxDecoration(
                     border: Border(
                       top: BorderSide(color: Color(0xFF868D8D), width: 1),
@@ -103,43 +121,50 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  // width: 305,
-                  // height: 60,
-                  // margin: const EdgeInsets.only(left: 35, top: 11),
                   decoration: const BoxDecoration(
                     border: Border(
                       top: BorderSide(color: Color(0xFF868D8D), width: 1),
                     ),
                   ),
                 ),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      '忘记密码？',
+                      'forgetPassword'.tr,
                       textAlign: TextAlign.right,
                       style: TextStyle(
-                        color: Color(0xFFAFB2B2),
+                        color: Theme.of(context).colorScheme.outline,
                       ),
                     ),
                   ],
                 ),
-                const Row(
+
+                const SizedBox(height: 30),
+                // 登录按钮
+                ElevatedButton(
+                    onPressed: () {
+                      authController.login(); // 更新登录状态
+                      Get.off(const SplashScreen()); // 登录成功后跳转到首页，并移除当前登录页面
+                    },
+                    child: Text('loginNow'.tr)),
+                const SizedBox(height: 10),
+
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      '还没有账号？',
-                      style: TextStyle(
+                      'loginNOAccount'.tr,
+                      style: const TextStyle(
                         fontSize: 16,
-                        color: Color(0xFF666666),
                         fontFamily: 'STSong-Regular',
                       ),
                     ),
                     Text(
-                      '去注册',
+                      'goRegister'.tr,
                       style: TextStyle(
                         fontSize: 16,
-                        color: Color(0xFF666666),
+                        color: Theme.of(context).colorScheme.primary,
                         fontFamily: 'STSong-Regular',
                       ),
                     ),
@@ -147,16 +172,8 @@ class LoginPage extends StatelessWidget {
                 ),
               ],
             ),
-            // 登录按钮
-
-            ElevatedButton(
-                onPressed: () {
-                  authController.login(); // 更新登录状态
-                  Get.off(const HomePage()); // 登录成功后跳转到首页，并移除当前登录页面
-                },
-                child: const Text('立即登录')),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

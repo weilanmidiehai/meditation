@@ -1,0 +1,15 @@
+final Map<String, String> zhCn = {
+  'hello': '你好',
+  'welcome': '欢迎使用应用！',
+  'changesLanguage': '切换语言',
+  'changesTheme': '切换主题',
+  'language': '简体中文',
+  'home': '主页',
+  'hy': '海燕',
+  'account': '我的',
+  'loginNow': '立即登录',
+  'loginTitle1': '立即登录，以访问您的历史练习和保存收藏的音乐。',
+  'loginNOAccount': '还没有账号？',
+  'goRegister': '去注册',
+  'forgetPassword': '忘记密码？',
+};
