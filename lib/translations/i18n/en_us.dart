@@ -12,5 +12,7 @@ final Map<String, String> enUs = {
       'Log in now to access your practice history and saved music collection.',
   'loginNOAccount': 'Don\'t have an account yet ? ',
   'goRegister': 'Go to register',
-  'forgetPassword': 'Forgot your password? ',
+  'forgetPassword': 'Forgot password? ',
+  'username': 'Username',
+  'pwd': 'Password',
 };

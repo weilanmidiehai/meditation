@@ -38,6 +38,7 @@ dependencies:
   get: ^4.6.6
   flex_color_scheme: ^8.1.0
   lottie: ^3.3.0
+  flutter_screenutil: ^5.9.3
 
 dev_dependencies:
   flutter_test:

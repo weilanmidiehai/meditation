@@ -12,4 +12,6 @@ final Map<String, String> zhCn = {
   'loginNOAccount': '还没有账号？',
   'goRegister': '去注册',
   'forgetPassword': '忘记密码？',
+  'username': '用户名',
+  'pwd': '密码',
 };

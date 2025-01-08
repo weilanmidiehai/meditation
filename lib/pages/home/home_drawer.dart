@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:meditation/login_page.dart';
+import 'package:meditation/pages/login/login_page.dart';
 
 import '../../util/app_theme.dart';
 import 'home_controller.dart';
@@ -64,7 +64,7 @@ class HomeDrawer extends StatelessWidget {
           ),
           ElevatedButton(
               onPressed: () {
-                Get.to(const LoginPage());
+                Get.to(  LoginPage());
               },
               child: const Text('退出'))
         ],
