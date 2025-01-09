@@ -40,12 +40,11 @@ class HomePage extends StatelessWidget {
             drawer: HomeDrawer(logic: controller),
             body: Column(
               children: [
-                InkWell(
-                    onTap: () {
-                      // Get.to(const WebViewExample());
-                    },
-                    child:
-                        HomeController.widgetOptions[controller.selectedIndex]),
+                // InkWell(
+                //     onTap: () {
+                //     },
+                //     child:
+                //         HomeController.widgetOptions[controller.selectedIndex]),
                 const Padding(
                   padding: EdgeInsets.only(top: 35, bottom: 30),
                   child: Column(
